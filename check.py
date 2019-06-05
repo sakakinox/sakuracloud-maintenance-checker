@@ -5,7 +5,7 @@ import json
 import toml
 import requests
 
-if (os.path.exists("config.toml")!=1):
+if (os.path.exists("/usr/local/src/sakuracloud-maintenance-checker/config.toml")!=1):
     print (2)
     sys.exit ("config.tomlがありません。")
 
