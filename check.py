@@ -9,7 +9,7 @@ if (os.path.exists("/usr/local/src/sakuracloud-maintenance-checker/config.toml")
     print (2)
     sys.exit ("config.tomlがありません。")
 
-config = toml.load(open("config.toml"))
+config = toml.load(open("/usr/local/src/sakuracloud-maintenance-checker/config.toml"))
 if (len(sys.argv)<2):
     print(2)
     sys.exit ("引数が足りません。")
