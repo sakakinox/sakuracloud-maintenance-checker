@@ -28,7 +28,7 @@ url = config["API"]["url"]
 r = requests.get(url+serverid, auth=(apikey,apisecret))
 results = json.loads(r.text)
 
-host_url = results["Server"]["Instance"]["Host"]["InfoURL"]
+#host_url = results["Server"]["Instance"]["Host"]["InfoURL"]
 
 if(host_url !=""):
     print (1)
