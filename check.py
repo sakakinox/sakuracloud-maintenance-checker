@@ -19,6 +19,8 @@ if (serverid == ""):
     print (2)
     sys.exit ("serveridが設定されていません。")
 print (serverid)
+sys.exit
+
 apikey = config["API"]["key"]
 apisecret = config["API"]["secret"]
 url = config["API"]["url"]
