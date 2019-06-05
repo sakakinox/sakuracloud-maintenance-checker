@@ -30,8 +30,8 @@ results = json.loads(r.text)
 
 #host_url = results["Server"]["Instance"]["Host"]["InfoURL"]
 
-if(host_url !=""):
-    print (1)
-else :
-    print (0)
+#if(host_url !=""):
+#    print (1)
+#else :
+#    print (0)
 
