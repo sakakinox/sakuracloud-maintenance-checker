@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 import sys
-import os
 import json
 import requests
 
@@ -8,10 +7,17 @@ apikey = ""
 apisecret = ""
 url = ""
 
+if(apikey == "" or apisecret == "" or url == ""):
+    sys.exit("API key not exist.")
+
 def get_json (url,key,secret):
     r = requests.get(url, auth=(key,secret))
+    if(r.status_code != 200):
+        sys.exit("API server error "+ str(r.status_code ))
+
     result = json.loads(r.text)
     return(result)
+
 
 def get_infourl (json,ip,infourl = ""):
     num = len(json["Servers"])
@@ -20,8 +26,9 @@ def get_infourl (json,ip,infourl = ""):
 
         if (instance["Interfaces"][0]["IPAddress"]==ip):
             infourl = instance["Instance"]["Host"]["InfoURL"]
-    return(infourl)
 
+
+    return(infourl)
 
 
 if (len(sys.argv)<2):
@@ -31,20 +38,6 @@ if (len(sys.argv)<2):
 ipaddr = sys.argv[1]
 if (ipaddr == ""):
     sys.exit ("ipアドレスが設定されていません。")
-#print (serverid)
 
-
-
-
-results = get_json(url,apikey,apisecret)
-#print (json.dumps(results["Servers"][28]["Index"],indent=2))
-#print (len(results["Servers"]))
-#print (get_instanceid(results,serverid))
+results = get_json(url+"server/",apikey,apisecret)
 print (get_infourl(results,ipaddr))
-#host_url = results["Server"]["Instance"]["Host"]["InfoURL"]
-
-#if(host_url !=""):
-#    print (1)
-#else :
-#    print (0)
-
