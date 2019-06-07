@@ -36,8 +36,6 @@ if (len(sys.argv)<2):
     sys.exit ("引数が足りません。")
 
 ipaddr = sys.argv[1]
-if (ipaddr == ""):
-    sys.exit ("ipアドレスが設定されていません。")
 
 results = get_json(url+"server/",apikey,apisecret)
 print (get_infourl(results,ipaddr))
