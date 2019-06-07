@@ -12,7 +12,7 @@
  * Python3
  * Ubuntu
 
-# 設定
+ ## 設定
 
  スクリプト内のapi情報を書き換える。  
  APIキーのアクセスレベルはリソース閲覧以上が必要。
@@ -24,7 +24,7 @@
   |url|さくらのクラウドのAPI URL|
 
 
-# CLI
+ ## CLI
 
  ```
  ./check.py InstanceIP
