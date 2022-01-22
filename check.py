@@ -35,7 +35,7 @@ def get_infourl(dic, ip, isdetect=0, infourl="IP address not found."):
     if (isdetect > 1):
         infourl = "Found multiple servers."
     if (not infourl):
-        infourl = "Nothing infomation!"
+        infourl = "Nothing information!"
     return(infourl)
 
 
