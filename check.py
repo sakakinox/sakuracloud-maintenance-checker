@@ -3,12 +3,6 @@ import sys
 import json
 import requests
 
-# url = https://secure.sakura.ad.jp/cloud/zone/tk1a/api/cloud/1.1/ (東京第1ゾーン)
-# url = https://secure.sakura.ad.jp/cloud/zone/tk1b/api/cloud/1.1/ (東京第2ゾーン)
-# url = https://secure.sakura.ad.jp/cloud/zone/is1a/api/cloud/1.1/ (石狩第1ゾーン)
-# url = https://secure.sakura.ad.jp/cloud/zone/is1b/api/cloud/1.1/ (石狩第2ゾーン)
-# url = https://secure.sakura.ad.jp/cloud/zone/tk1v/api/cloud/1.1/ (Sandbox)
-
 apikey = ""
 apisecret = ""
 url = ""
@@ -32,7 +26,6 @@ def get_infourl (json,ip,infourl = ""):
                     infourl = server["Instance"]["Host"]["InfoURL"]
                 except TypeError as e:
                     return "Type Error (server may be powered off)"
-#                infourl ="https://test/"
                 if not infourl:
                     return "0"
                 else:
