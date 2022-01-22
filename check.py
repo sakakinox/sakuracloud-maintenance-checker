@@ -3,18 +3,20 @@ import sys
 import json
 import requests
 
-apikey = ""
-apisecret = ""
-url = ""
+apikey = "ho"
+apisecret = "jo"
+url = " "
 
 if(apikey == "" or apisecret == "" or url == ""):
     sys.exit("API key not exist.")
 
 def get_json (url,key,secret):
-    r = requests.get(url, auth=(key,secret))
+    try: 
+        r = requests.get(url, auth=(key,secret))
+    except requests.exceptions.MissingSchema :
+        sys.exit("Get JSON error")
     if(r.status_code != 200):
         sys.exit("API server error "+ str(r.status_code ))
-
     result = json.loads(r.text)
     return(result)
 
