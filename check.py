@@ -7,35 +7,46 @@ apikey = ""
 apisecret = ""
 url = ""
 
-if(apikey == "" or apisecret == "" or url == ""):
-    sys.exit("API key not exist.")
 
-def get_json (url,key,secret):
-    r = requests.get(url, auth=(key,secret))
+def get_json(url, key, secret):
+    try:
+        r = requests.get(url, auth=(key, secret))
+    except requests.exceptions.MissingSchema:
+        sys.exit("Http request error.")
     if(r.status_code != 200):
-        sys.exit("API server error "+ str(r.status_code ))
-
-    result = json.loads(r.text)
+        sys.exit("API server error " + str(r.status_code))
+    try:
+        result = json.loads(r.text)
+    except json.decoder.JSONDecodeError:
+        sys.exit("Json format error.")
     return(result)
 
 
-def get_infourl (json,ip,infourl = ""):
-    num = len(json["Servers"])
-    for i in range(num):
-        instance =json["Servers"][i]
-
-        if (instance["Interfaces"][0]["IPAddress"]==ip):
-            infourl = instance["Instance"]["Host"]["InfoURL"]
-
-
+def get_infourl(dic, ip, isdetect=0, infourl="IP address not found."):
+    for server in dic["Servers"]:
+        for interface in server["Interfaces"]:
+            if (interface["IPAddress"] == ip or
+                    interface["UserIPAddress"] == ip):
+                isdetect = isdetect + 1
+                try:
+                    infourl = server["Instance"]["Host"]["InfoURL"]
+                except TypeError:
+                    return "Host server error. (server may be powered off)"
+    if (isdetect > 1):
+        infourl = "Found multiple servers."
+    if (not infourl):
+        infourl = "Nothing infomation!"
     return(infourl)
 
 
-if (len(sys.argv)<2):
-    print(2)
-    sys.exit ("引数が足りません。")
+if(apikey == "" or apisecret == "" or url == ""):
+    sys.exit("API key not exist.")
+
+if (len(sys.argv) < 2):
+    sys.exit("Not enough arguments.")
 
 ipaddr = sys.argv[1]
 
-results = get_json(url+"server/",apikey,apisecret)
-print (get_infourl(results,ipaddr))
+results = get_json(url+"server", apikey, apisecret)
+
+print(get_infourl(results, ipaddr))
