@@ -22,7 +22,7 @@ def get_json(url, key, secret):
     return(result)
 
 
-def get_infourl(dic, ip, isdetect=0, infourl="IP address not detected"):
+def get_infourl(dic, ip, isdetect=0, infourl="IP address not found."):
     for server in dic["Servers"]:
         for interface in server["Interfaces"]:
             if (interface["IPAddress"] == ip or
@@ -33,7 +33,7 @@ def get_infourl(dic, ip, isdetect=0, infourl="IP address not detected"):
                 except TypeError:
                     return "Host server error. (server may be powered off)"
     if (isdetect > 1):
-        infourl = "Detected multiple servers."
+        infourl = "Found multiple servers."
     if (not infourl):
         infourl = "Nothing infomation!"
     return(infourl)
@@ -43,11 +43,9 @@ if(apikey == "" or apisecret == "" or url == ""):
     sys.exit("API key not exist.")
 
 if (len(sys.argv) < 2):
-    sys.exit("引数が足りません。")
+    sys.exit("Not enough arguments.")
 
 ipaddr = sys.argv[1]
-if (ipaddr == ""):
-    sys.exit("ipアドレスが設定されていません。")
 
 results = get_json(url+"server", apikey, apisecret)
 
