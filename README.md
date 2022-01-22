@@ -10,7 +10,7 @@
  ## 動作用件
 
  * Python3
- * Ubuntu
+ * Ubuntu20.04
 
  ## 設定
 
@@ -30,7 +30,7 @@
  ./check.py InstanceIP
  ```
  * メンテナンス情報がある場合は対象URLが出る。
- * メンテナンス情報がない場合は0を返す。
+ * メンテナンス情報がない場合は"Nothing infomation!"を返す。
  * エラーの場合は内容に応じたメッセージが出る。
     * "API key not exist." API情報が空のときに表示される。
     * "API server error Code" APIserverから200以外のステータスが返ったときに表示される。

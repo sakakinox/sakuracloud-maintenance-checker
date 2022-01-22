@@ -3,46 +3,48 @@ import sys
 import json
 import requests
 
-apikey = "ho"
-apisecret = "jo"
-url = " "
-
-if(apikey == "" or apisecret == "" or url == ""):
-    sys.exit("API key not exist.")
+apikey = ""
+apisecret = ""
+url = ""
 
 def get_json (url,key,secret):
     try: 
         r = requests.get(url, auth=(key,secret))
     except requests.exceptions.MissingSchema :
-        sys.exit("Get JSON error")
+        sys.exit("Http request error.")
     if(r.status_code != 200):
         sys.exit("API server error "+ str(r.status_code ))
-    result = json.loads(r.text)
+    try:    
+        result = json.loads(r.text)
+    except json.decoder.JSONDecodeError:
+        sys.exit("Json format error.")
     return(result)
 
-def get_infourl (json,ip,infourl = ""):
-    for server in json["Servers"]:
+def get_infourl (dic,ip,isdetect = 0, infourl = "IP address not detected"):
+    for server in dic["Servers"]:
         for interface in server["Interfaces"]:
             if interface["IPAddress"]==ip or interface["UserIPAddress"]==ip:
+                isdetect = isdetect + 1
                 try:
                     infourl = server["Instance"]["Host"]["InfoURL"]
-                except TypeError as e:
-                    return "Type Error (server may be powered off)"
-                if not infourl:
-                    return "0"
-                else:
-                    return(infourl)
+                except TypeError:
+                    return "Host server error. (server may be powered off)"
+    if isdetect > 1:
+        infourl= "Detected multiple servers."
+    if not infourl:
+        infourl= "Nothing infomation!"
+    return(infourl)
 
-    return "ip address not found"
+if(apikey == "" or apisecret == "" or url == ""):
+    sys.exit("API key not exist.")
 
 if (len(sys.argv)<2):
-    print(2)
     sys.exit ("引数が足りません。")
 
 ipaddr = sys.argv[1]
 if (ipaddr == ""):
     sys.exit ("ipアドレスが設定されていません。")
 
-results = get_json(url,apikey,apisecret)
+results = get_json(url+"server",apikey,apisecret)
 
 print (get_infourl(results,ipaddr))
